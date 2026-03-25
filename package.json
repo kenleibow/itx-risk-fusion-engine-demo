@@ -1,0 +1,12 @@
+{
+  "name": "itx-risk-fusion-engine-demo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static executive demo for ITX Risk Fusion Engine",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

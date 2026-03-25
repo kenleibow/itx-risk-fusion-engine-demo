@@ -1,11 +1,575 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>ITX Risk Fusion Engine</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ITX Risk Fusion Engine Demo</title>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --blue: #2563eb;
+      --purple: #7c3aed;
+      --green: #16a34a;
+      --sky: #0ea5e9;
+      --rose: #e11d48;
+      --amber: #d97706;
+      --border: #e2e8f0;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background: linear-gradient(135deg, #eff6ff 0%, #ffffff 50%, #f5f3ff 100%);
+    }
+
+    .page {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 32px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      box-shadow: 0 6px 20px rgba(15, 23, 42, 0.06);
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .hero {
+      background: linear-gradient(90deg, #2563eb 0%, #7c3aed 100%);
+      color: white;
+      border: none;
+    }
+
+    .hero p {
+      color: #dbeafe;
+      font-size: 20px;
+      margin-top: 10px;
+    }
+
+    .hero h1 {
+      margin: 16px 0 12px;
+      font-size: 48px;
+    }
+
+    .pill {
+      display: inline-block;
+      background: white;
+      color: var(--blue);
+      font-weight: 700;
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 14px;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .problem { border-left: 6px solid #f87171; }
+    .problem h2 { color: #dc2626; margin-top: 0; }
+
+    .solution { border-left: 6px solid #4ade80; }
+    .solution h2 { color: #16a34a; margin-top: 0; }
+
+    .solution-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .icon-badge {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: #dcfce7;
+      color: var(--green);
+      font-weight: 700;
+    }
+
+    .section-header h2 {
+      margin: 0 0 8px;
+    }
+
+    .section-header p {
+      margin: 0 0 20px;
+      color: var(--muted);
+    }
+
+    .profile-box {
+      border: 1px solid var(--border);
+      background: linear-gradient(90deg, #f0f9ff, #ecfeff);
+      border-radius: 20px;
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+
+    .profile-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .profile-header p {
+      margin: 6px 0 0;
+      color: var(--muted);
+    }
+
+    .profile-header h3 {
+      margin: 0;
+    }
+
+    .baseline-pill {
+      background: white;
+      color: var(--sky);
+      border-radius: 999px;
+      padding: 10px 16px;
+      font-weight: 700;
+      box-shadow: 0 3px 10px rgba(2, 132, 199, 0.08);
+      white-space: nowrap;
+    }
+
+    .profile-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .profile-card {
+      background: rgba(255,255,255,.9);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 16px;
+    }
+
+    .profile-label { font-weight: 700; margin-bottom: 8px; }
+    .profile-value { font-size: 32px; font-weight: 700; margin-bottom: 8px; }
+    .rose { color: var(--rose); }
+    .emerald { color: #059669; }
+    .amber { color: var(--amber); }
+
+    .small-note {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 8px;
+      line-height: 1.4;
+    }
+
+    .subhead {
+      margin-top: 0;
+      margin-bottom: 16px;
+      font-size: 22px;
+    }
+
+    .source-card {
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: white;
+      padding: 16px;
+      margin-bottom: 14px;
+      box-shadow: 0 4px 12px rgba(15,23,42,0.04);
+    }
+
+    .source-top {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .icon-box {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+    }
+
+    .blue-box { background: #dbeafe; color: #1d4ed8; }
+    .purple-box { background: #ede9fe; color: #7c3aed; }
+    .green-box { background: #dcfce7; color: #15803d; }
+    .orange-box { background: #ffedd5; color: #ea580c; }
+
+    .source-title { font-weight: 700; }
+
+    .input-label {
+      font-size: 12px;
+      color: var(--text);
+      margin: 10px 0 4px;
+    }
+
+    input[type="range"] { width: 100%; }
+
+    .primary-btn {
+      margin-top: 8px;
+      background: var(--purple);
+      color: white;
+      border: 0;
+      border-radius: 14px;
+      padding: 12px 16px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .primary-btn:hover { background: #6d28d9; }
+
+    .results-col {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .result-card, .decision-card {
+      border-radius: 18px;
+      padding: 16px;
+    }
+
+    .result-card.sky { background: #f0f9ff; border: 1px solid #e0f2fe; }
+    .result-card.blue { background: #eff6ff; }
+    .result-card.green { background: #f0fdf4; }
+
+    .result-label {
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .result-number {
+      font-size: 42px;
+      font-weight: 800;
+      margin-top: 6px;
+    }
+
+    .bar {
+      margin-top: 12px;
+      height: 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.75);
+      overflow: hidden;
+    }
+
+    .bar-fill { height: 100%; border-radius: 999px; }
+    .blue-fill { background: #1d4ed8; }
+    .green-fill { background: #15803d; }
+
+    .decision-card {
+      background: white;
+      border-left: 6px solid var(--purple);
+    }
+
+    .decision-label {
+      color: var(--purple);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .decision-value {
+      margin-top: 8px;
+      font-size: 32px;
+      font-weight: 800;
+    }
+
+    .explain-title { font-weight: 700; margin-bottom: 10px; }
+
+    .explain-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 10px 12px;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    .explain-right { color: var(--purple); font-weight: 700; }
+
+    .impact {
+      background: linear-gradient(90deg, #f0fdf4, #eff6ff);
+      border: none;
+    }
+
+    .impact-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .impact-item { font-weight: 700; }
+    .green-text { color: #15803d; }
+    .blue-text { color: #1d4ed8; }
+    .purple-text { color: #7c3aed; }
+
+    @media (max-width: 900px) {
+      .two-col, .profile-grid, .impact-grid {
+        grid-template-columns: 1fr;
+      }
+      .hero h1 { font-size: 38px; }
+      .page { padding: 18px; }
+      .profile-header { flex-direction: column; }
+    }
+  </style>
 </head>
 <body>
-  <h1>ITX Risk Fusion Engine Demo</h1>
-  <p>If you see this, your app is working 🎉</p>
+  <main class="page">
+    <section class="card hero">
+      <div class="pill">ITX Product Demo</div>
+      <h1>ITX Risk Fusion Engine™</h1>
+      <p>Confidence-weighted decision intelligence for life insurance underwriting</p>
+    </section>
+
+    <section class="two-col">
+      <div class="card problem">
+        <h2>Current Challenge</h2>
+        <p>Conflicting and inconsistent underwriting signals</p>
+        <ul>
+          <li>APS vs Rx conflicts</li>
+          <li>Missing or delayed data</li>
+          <li>Subjective weighting</li>
+          <li>Inconsistent decisions</li>
+        </ul>
+      </div>
+      <div class="card solution">
+        <h2>ITX Solution</h2>
+        <p>Confidence-weighted, explainable decisions</p>
+        <div class="solution-row">
+          <div class="icon-badge">✓</div>
+          <span>Unified risk + confidence + explainability</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="section-header">
+        <h2>Live Underwriting Scenario</h2>
+        <p>Interactive simulation with applicant profile, source confidence, and fused output</p>
+      </div>
+
+      <div class="profile-box">
+        <div class="profile-header">
+          <div>
+            <h3>1. Define Applicant Risk Profile</h3>
+            <p>Health + lifestyle + timing create the baseline profile before source-level fusion begins.</p>
+          </div>
+          <div class="baseline-pill">Baseline Risk <span id="baselineRiskValue">55</span></div>
+        </div>
+
+        <div class="profile-grid">
+          <div class="profile-card">
+            <div class="profile-label rose">♥ Health Profile</div>
+            <div class="profile-value" id="healthValue">58</div>
+            <input id="health" type="range" min="0" max="100" value="58" />
+            <div class="small-note">Impairments, build, medical history, and clinical complexity</div>
+          </div>
+          <div class="profile-card">
+            <div class="profile-label emerald">✓ Lifestyle Profile</div>
+            <div class="profile-value" id="lifestyleValue">52</div>
+            <input id="lifestyle" type="range" min="0" max="100" value="52" />
+            <div class="small-note">Nicotine, avocations, habits, and behavioral factors</div>
+          </div>
+          <div class="profile-card">
+            <div class="profile-label amber">◷ Timing / Recency</div>
+            <div class="profile-value" id="timingValue">70</div>
+            <input id="timing" type="range" min="0" max="100" value="70" />
+            <div class="small-note">Higher means fresher and more decision-ready evidence</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div>
+          <h3 class="subhead">2. Assess Each Input and Assign Confidence</h3>
+          <div id="sources"></div>
+          <button id="conflictBtn" class="primary-btn">Load Conflicting Case</button>
+        </div>
+
+        <div class="results-col">
+          <h3 class="subhead">3. Fuse the Data and Output the Decision</h3>
+
+          <div class="result-card sky">
+            <div class="result-label">Baseline Risk Profile</div>
+            <div class="result-number" id="baselineRiskPanel">55</div>
+          </div>
+
+          <div class="result-card blue">
+            <div class="result-label">Fused Risk Score</div>
+            <div class="result-number" id="fusedRiskValue">61</div>
+            <div class="bar"><div id="fusedRiskBar" class="bar-fill blue-fill" style="width: 61%;"></div></div>
+          </div>
+
+          <div class="result-card green">
+            <div class="result-label">Confidence</div>
+            <div class="result-number" id="confidenceValue">78%</div>
+            <div class="bar"><div id="confidenceBar" class="bar-fill green-fill" style="width: 78%;"></div></div>
+          </div>
+
+          <div class="decision-card">
+            <div class="decision-label">✓ Decision</div>
+            <div class="decision-value" id="decisionValue">Table Rated</div>
+          </div>
+
+          <div class="explainability">
+            <div class="explain-title">Explainability</div>
+            <div id="explainList"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card impact">
+      <div class="impact-grid">
+        <div class="impact-item green-text">↗ Improved placement</div>
+        <div class="impact-item blue-text">✓ Fewer false declines</div>
+        <div class="impact-item purple-text">✓ Explainable decisions</div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const state = {
+      riskProfile: { health: 58, lifestyle: 52, timing: 70 },
+      sources: {
+        aps: { label: "APS Records", icon: "A", boxClass: "blue-box", risk: 65, confidence: 55 },
+        rx: { label: "Rx Data", icon: "R", boxClass: "purple-box", risk: 72, confidence: 75 },
+        labs: { label: "Lab Results", icon: "L", boxClass: "green-box", risk: 48, confidence: 90 },
+        wearables: { label: "Wearables", icon: "W", boxClass: "orange-box", risk: 58, confidence: 65 }
+      }
+    };
+
+    function baselineRisk() {
+      const p = state.riskProfile;
+      return Math.round(p.health * 0.45 + p.lifestyle * 0.3 + (100 - p.timing) * 0.25);
+    }
+
+    function calculate() {
+      const base = baselineRisk();
+      const evidence = Object.entries(state.sources).map(([key, s]) => {
+        const variance = Math.max(1, 101 - s.confidence);
+        const weight = 1 / variance;
+        const blendedRisk = Math.round(s.risk * 0.75 + base * 0.25);
+        return { key, label: s.label, weight, risk: blendedRisk, confidence: s.confidence };
+      });
+
+      const totalWeight = evidence.reduce((sum, e) => sum + e.weight, 0) || 1;
+      const fusedRisk = Math.round(evidence.reduce((sum, e) => sum + e.risk * e.weight, 0) / totalWeight);
+      const confidence = Math.max(1, Math.min(99, Math.round(
+        evidence.reduce((sum, e) => sum + e.confidence * e.weight, 0) / totalWeight
+      )));
+
+      let decision = "Standard";
+      if (fusedRisk > 75) decision = "Decline";
+      else if (fusedRisk > 60) decision = "Table Rated";
+      else if (fusedRisk > 45) decision = "Standard Plus";
+      else decision = "Preferred";
+
+      return { base, fusedRisk, confidence, decision, evidence: evidence.sort((a,b) => b.weight - a.weight) };
+    }
+
+    function renderSources() {
+      const container = document.getElementById("sources");
+      container.innerHTML = "";
+
+      Object.entries(state.sources).forEach(([key, source]) => {
+        const wrapper = document.createElement("div");
+        wrapper.className = "source-card";
+        wrapper.innerHTML = `
+          <div class="source-top">
+            <div class="icon-box ${source.boxClass}">${source.icon}</div>
+            <div class="source-title">${source.label}</div>
+          </div>
+          <div class="input-label">Source Risk Assessment: <span id="${key}-risk-value">${source.risk}</span></div>
+          <input type="range" min="0" max="100" value="${source.risk}" id="${key}-risk" />
+          <div class="input-label">Confidence: <span id="${key}-confidence-value">${source.confidence}</span></div>
+          <input type="range" min="0" max="99" value="${source.confidence}" id="${key}-confidence" />
+        `;
+        container.appendChild(wrapper);
+
+        document.getElementById(`${key}-risk`).addEventListener("input", (e) => {
+          state.sources[key].risk = Number(e.target.value);
+          document.getElementById(`${key}-risk-value`).textContent = e.target.value;
+          renderResults();
+        });
+
+        document.getElementById(`${key}-confidence`).addEventListener("input", (e) => {
+          state.sources[key].confidence = Number(e.target.value);
+          document.getElementById(`${key}-confidence-value`).textContent = e.target.value;
+          renderResults();
+        });
+      });
+    }
+
+    function renderResults() {
+      const results = calculate();
+
+      document.getElementById("baselineRiskValue").textContent = results.base;
+      document.getElementById("baselineRiskPanel").textContent = results.base;
+      document.getElementById("fusedRiskValue").textContent = results.fusedRisk;
+      document.getElementById("confidenceValue").textContent = results.confidence + "%";
+      document.getElementById("decisionValue").textContent = results.decision;
+      document.getElementById("fusedRiskBar").style.width = results.fusedRisk + "%";
+      document.getElementById("confidenceBar").style.width = results.confidence + "%";
+
+      const explainList = document.getElementById("explainList");
+      explainList.innerHTML = "";
+      results.evidence.forEach((e) => {
+        const row = document.createElement("div");
+        row.className = "explain-row";
+        row.innerHTML = `
+          <span>${e.label}</span>
+          <span class="explain-right">Weight ${e.weight.toFixed(2)} · Blended Risk ${e.risk}</span>
+        `;
+        explainList.appendChild(row);
+      });
+    }
+
+    function bindProfileControls() {
+      ["health", "lifestyle", "timing"].forEach((field) => {
+        const el = document.getElementById(field);
+        const valueEl = document.getElementById(field + "Value");
+        el.addEventListener("input", (e) => {
+          state.riskProfile[field] = Number(e.target.value);
+          valueEl.textContent = e.target.value;
+          renderResults();
+        });
+      });
+    }
+
+    document.getElementById("conflictBtn").addEventListener("click", () => {
+      state.riskProfile = { health: 72, lifestyle: 60, timing: 35 };
+      document.getElementById("health").value = 72;
+      document.getElementById("lifestyle").value = 60;
+      document.getElementById("timing").value = 35;
+      document.getElementById("healthValue").textContent = "72";
+      document.getElementById("lifestyleValue").textContent = "60";
+      document.getElementById("timingValue").textContent = "35";
+
+      state.sources.aps.risk = 80; state.sources.aps.confidence = 50;
+      state.sources.rx.risk = 75; state.sources.rx.confidence = 80;
+      state.sources.labs.risk = 45; state.sources.labs.confidence = 92;
+      state.sources.wearables.risk = 60; state.sources.wearables.confidence = 60;
+
+      renderSources();
+      renderResults();
+    });
+
+    renderSources();
+    bindProfileControls();
+    renderResults();
+  </script>
 </body>
 </html>

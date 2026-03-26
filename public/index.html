@@ -6,17 +6,22 @@
   <title>ITX Risk Fusion Engine Demo</title>
   <style>
     :root {
-      --bg: #f8fafc;
-      --card: #ffffff;
       --text: #0f172a;
       --muted: #64748b;
-      --blue: #2563eb;
-      --purple: #7c3aed;
-      --green: #16a34a;
-      --sky: #0ea5e9;
-      --rose: #e11d48;
-      --amber: #d97706;
       --border: #e2e8f0;
+      --blue: #2563eb;
+      --blue-soft: #eff6ff;
+      --green: #15803d;
+      --green-soft: #f0fdf4;
+      --purple: #7c3aed;
+      --purple-soft: #f5f3ff;
+      --amber: #b45309;
+      --amber-soft: #fffbeb;
+      --red: #dc2626;
+      --red-soft: #fef2f2;
+      --sky: #0ea5e9;
+      --sky-soft: #f0f9ff;
+      --bg: linear-gradient(135deg, #eff6ff 0%, #ffffff 50%, #f5f3ff 100%);
     }
 
     * { box-sizing: border-box; }
@@ -25,74 +30,107 @@
       margin: 0;
       font-family: Arial, Helvetica, sans-serif;
       color: var(--text);
-      background: linear-gradient(135deg, #eff6ff 0%, #ffffff 50%, #f5f3ff 100%);
+      background: var(--bg);
     }
 
     .page {
-      max-width: 1200px;
+      max-width: 1240px;
       margin: 0 auto;
-      padding: 32px;
+      padding: 28px;
     }
 
     .card {
-      background: var(--card);
+      background: white;
       border: 1px solid var(--border);
-      border-radius: 24px;
-      box-shadow: 0 6px 20px rgba(15, 23, 42, 0.06);
-      padding: 24px;
-      margin-bottom: 24px;
+      border-radius: 22px;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+      padding: 22px;
+      margin-bottom: 22px;
     }
 
     .hero {
       background: linear-gradient(90deg, #2563eb 0%, #7c3aed 100%);
       color: white;
       border: none;
-    }
-
-    .hero p {
-      color: #dbeafe;
-      font-size: 20px;
-      margin-top: 10px;
-    }
-
-    .hero h1 {
-      margin: 16px 0 12px;
-      font-size: 48px;
+      padding: 28px;
     }
 
     .pill {
       display: inline-block;
       background: white;
       color: var(--blue);
-      font-weight: 700;
-      padding: 8px 14px;
       border-radius: 999px;
-      font-size: 14px;
+      padding: 8px 14px;
+      font-size: 13px;
+      font-weight: 700;
     }
 
-    .two-col {
+    .hero h1 {
+      margin: 16px 0 10px;
+      font-size: 44px;
+    }
+
+    .hero p {
+      margin: 0;
+      color: #dbeafe;
+      font-size: 18px;
+    }
+
+    .grid-2 {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 24px;
+      gap: 22px;
     }
 
-    .problem {
-      border-left: 6px solid #f87171;
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
     }
 
-    .problem h2 {
-      color: #dc2626;
-      margin-top: 0;
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
     }
 
-    .solution {
-      border-left: 6px solid #4ade80;
+    .section-title {
+      font-size: 24px;
+      margin: 0 0 8px;
     }
 
-    .solution h2 {
-      color: #16a34a;
-      margin-top: 0;
+    .section-subtitle {
+      color: var(--muted);
+      margin: 0 0 18px;
+      font-size: 14px;
+      line-height: 1.5;
     }
+
+    .summary-item {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 14px;
+      background: #fff;
+    }
+
+    .summary-label {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+
+    .summary-value {
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .problem { border-left: 6px solid #f87171; }
+    .solution { border-left: 6px solid #4ade80; }
+
+    .problem h3 { color: var(--red); margin-top: 0; }
+    .solution h3 { color: var(--green); margin-top: 0; }
 
     .solution-row {
       display: flex;
@@ -102,24 +140,15 @@
     }
 
     .shield-badge {
-      background: #dcfce7;
-      color: #16a34a;
-      border-radius: 14px;
       width: 52px;
       height: 52px;
+      border-radius: 14px;
+      background: #dcfce7;
+      color: var(--green);
       display: grid;
       place-items: center;
-      box-shadow: 0 4px 10px rgba(22, 163, 74, 0.12);
       flex-shrink: 0;
-    }
-
-    .section-header h2 {
-      margin: 0 0 8px;
-    }
-
-    .section-header p {
-      margin: 0 0 20px;
-      color: var(--muted);
+      box-shadow: 0 4px 10px rgba(22, 163, 74, 0.12);
     }
 
     .profile-box {
@@ -127,7 +156,7 @@
       background: linear-gradient(90deg, #f0f9ff, #ecfeff);
       border-radius: 20px;
       padding: 20px;
-      margin-bottom: 24px;
+      margin-bottom: 22px;
     }
 
     .profile-header {
@@ -141,10 +170,12 @@
     .profile-header p {
       margin: 6px 0 0;
       color: var(--muted);
+      font-size: 14px;
     }
 
     .profile-header h3 {
       margin: 0;
+      font-size: 20px;
     }
 
     .baseline-pill {
@@ -157,14 +188,8 @@
       white-space: nowrap;
     }
 
-    .profile-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-    }
-
     .profile-card {
-      background: rgba(255,255,255,.9);
+      background: rgba(255,255,255,.92);
       border: 1px solid var(--border);
       border-radius: 18px;
       padding: 16px;
@@ -176,14 +201,14 @@
     }
 
     .profile-value {
-      font-size: 32px;
-      font-weight: 700;
+      font-size: 30px;
+      font-weight: 800;
       margin-bottom: 8px;
     }
 
-    .rose { color: var(--rose); }
+    .rose { color: #e11d48; }
     .emerald { color: #059669; }
-    .amber { color: var(--amber); }
+    .amber { color: #d97706; }
 
     .small-note {
       font-size: 12px;
@@ -193,9 +218,8 @@
     }
 
     .subhead {
-      margin-top: 0;
-      margin-bottom: 16px;
-      font-size: 22px;
+      margin: 0 0 14px;
+      font-size: 21px;
     }
 
     .source-card {
@@ -215,8 +239,8 @@
     }
 
     .icon-box {
-      width: 34px;
-      height: 34px;
+      width: 36px;
+      height: 36px;
       border-radius: 10px;
       display: grid;
       place-items: center;
@@ -231,6 +255,13 @@
 
     .source-title {
       font-weight: 700;
+      font-size: 16px;
+    }
+
+    .source-meta {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 2px;
     }
 
     .input-label {
@@ -244,10 +275,8 @@
       cursor: pointer;
     }
 
-    .primary-btn {
-      margin-top: 8px;
-      background: var(--purple);
-      color: white;
+    .primary-btn,
+    .secondary-btn {
       border: 0;
       border-radius: 14px;
       padding: 12px 16px;
@@ -255,8 +284,26 @@
       cursor: pointer;
     }
 
+    .primary-btn {
+      background: var(--purple);
+      color: white;
+    }
+
     .primary-btn:hover {
       background: #6d28d9;
+    }
+
+    .secondary-btn {
+      background: white;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    .button-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+      flex-wrap: wrap;
     }
 
     .results-col {
@@ -271,18 +318,10 @@
       padding: 16px;
     }
 
-    .result-card.sky {
-      background: #f0f9ff;
-      border: 1px solid #e0f2fe;
-    }
-
-    .result-card.blue {
-      background: #eff6ff;
-    }
-
-    .result-card.green {
-      background: #f0fdf4;
-    }
+    .result-card.sky { background: var(--sky-soft); border: 1px solid #e0f2fe; }
+    .result-card.blue { background: var(--blue-soft); }
+    .result-card.green { background: var(--green-soft); }
+    .result-card.purple { background: var(--purple-soft); }
 
     .result-label {
       font-size: 14px;
@@ -290,7 +329,7 @@
     }
 
     .result-number {
-      font-size: 42px;
+      font-size: 40px;
       font-weight: 800;
       margin-top: 6px;
     }
@@ -306,10 +345,12 @@
     .bar-fill {
       height: 100%;
       border-radius: 999px;
+      transition: width .2s ease;
     }
 
     .blue-fill { background: #1d4ed8; }
     .green-fill { background: #15803d; }
+    .amber-fill { background: #d97706; }
 
     .decision-card {
       background: white;
@@ -324,16 +365,26 @@
 
     .decision-value {
       margin-top: 8px;
-      font-size: 32px;
+      font-size: 30px;
       font-weight: 800;
     }
 
-    .explain-title {
-      font-weight: 700;
-      margin-bottom: 10px;
+    .decision-note {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
     }
 
-    .explain-row {
+    .driver-list,
+    .audit-list,
+    .explain-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .list-row {
       display: flex;
       justify-content: space-between;
       gap: 10px;
@@ -341,14 +392,33 @@
       border: 1px solid var(--border);
       border-radius: 12px;
       padding: 10px 12px;
-      margin-bottom: 8px;
       font-size: 14px;
     }
 
-    .explain-right {
+    .list-right {
       color: var(--purple);
       font-weight: 700;
       text-align: right;
+    }
+
+    .tag {
+      display: inline-block;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .tag-green { background: #dcfce7; color: #15803d; }
+    .tag-amber { background: #fef3c7; color: #b45309; }
+    .tag-red { background: #fee2e2; color: #b91c1c; }
+    .tag-blue { background: #dbeafe; color: #1d4ed8; }
+
+    .adjustment-box {
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 16px;
+      background: #fff;
     }
 
     .impact {
@@ -370,8 +440,8 @@
     }
 
     .impact-icon {
-      width: 34px;
-      height: 34px;
+      width: 36px;
+      height: 36px;
       border-radius: 999px;
       display: inline-grid;
       place-items: center;
@@ -379,52 +449,30 @@
       flex-shrink: 0;
     }
 
-    .green-bg {
-      background: #dcfce7;
-      color: #15803d;
-    }
-
-    .blue-bg {
-      background: #dbeafe;
-      color: #1d4ed8;
-    }
-
-    .purple-bg {
-      background: #ede9fe;
-      color: #7c3aed;
-    }
+    .green-bg { background: #dcfce7; color: #15803d; }
+    .blue-bg { background: #dbeafe; color: #1d4ed8; }
+    .purple-bg { background: #ede9fe; color: #7c3aed; }
 
     .green-text { color: #15803d; }
     .blue-text { color: #1d4ed8; }
     .purple-text { color: #7c3aed; }
 
-    @media (max-width: 900px) {
-      .two-col,
-      .profile-grid,
-      .impact-grid {
+    @media (max-width: 1000px) {
+      .grid-2, .grid-3, .grid-4, .impact-grid {
         grid-template-columns: 1fr;
-      }
-
-      .hero h1 {
-        font-size: 38px;
-      }
-
-      .page {
-        padding: 18px;
       }
 
       .profile-header {
         flex-direction: column;
       }
+    }
 
-      .explain-row {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .explain-right {
-        text-align: left;
-      }
+    @media (max-width: 700px) {
+      .page { padding: 16px; }
+      .hero h1 { font-size: 34px; }
+      .result-number { font-size: 34px; }
+      .list-row { flex-direction: column; }
+      .list-right { text-align: left; }
     }
   </style>
 </head>
@@ -436,21 +484,45 @@
       <p>Confidence-weighted decision intelligence for life insurance underwriting</p>
     </section>
 
-    <section class="two-col">
+    <section class="card">
+      <h2 class="section-title">Case Summary</h2>
+      <p class="section-subtitle">Illustrative carrier demo case showing how structured and unstructured evidence can be fused into a single explainable underwriting recommendation.</p>
+
+      <div class="grid-4">
+        <div class="summary-item">
+          <div class="summary-label">Case ID</div>
+          <div class="summary-value">ITX-2026-041</div>
+        </div>
+        <div class="summary-item">
+          <div class="summary-label">Applicant</div>
+          <div class="summary-value">Male, Age 52</div>
+        </div>
+        <div class="summary-item">
+          <div class="summary-label">Product</div>
+          <div class="summary-value">20-Year Term</div>
+        </div>
+        <div class="summary-item">
+          <div class="summary-label">Face Amount</div>
+          <div class="summary-value">$1,000,000</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid-2">
       <div class="card problem">
-        <h2>Current Challenge</h2>
-        <p>Conflicting and inconsistent underwriting signals</p>
+        <h3>Current Challenge</h3>
+        <p>Conflicting and inconsistent underwriting signals across questionnaire answers, Rx history, labs, and APS records create friction, delay, and inconsistent decisions.</p>
         <ul>
           <li>APS vs Rx conflicts</li>
           <li>Missing or delayed data</li>
           <li>Subjective weighting</li>
-          <li>Inconsistent decisions</li>
+          <li>Inconsistent case handling</li>
         </ul>
       </div>
 
       <div class="card solution">
-        <h2>ITX Solution</h2>
-        <p>Confidence-weighted, explainable decisions</p>
+        <h3>ITX Solution</h3>
+        <p>Automatically generate source-level risk and confidence, then combine them in a confidence-weighted fusion model with human override capability.</p>
 
         <div class="solution-row">
           <div class="shield-badge">
@@ -459,27 +531,25 @@
               <path d="m9 12 2 2 4-4"></path>
             </svg>
           </div>
-          <span>Unified risk + confidence + explainability</span>
+          <span>Unified risk + confidence + explainability + human-in-the-loop adjustment</span>
         </div>
       </div>
     </section>
 
     <section class="card">
-      <div class="section-header">
-        <h2>Live Underwriting Scenario</h2>
-        <p>Interactive simulation with applicant profile, source confidence, and fused output</p>
-      </div>
+      <h2 class="section-title">Live Underwriting Scenario</h2>
+      <p class="section-subtitle">Interactive simulation with applicant profile, system-generated source scoring, fused output, recommendation, and underwriter adjustment.</p>
 
       <div class="profile-box">
         <div class="profile-header">
           <div>
             <h3>1. Define Applicant Risk Profile</h3>
-            <p>Health + lifestyle + timing create the baseline profile before source-level fusion begins.</p>
+            <p>Health + lifestyle + timing establish the baseline profile before source-level fusion begins.</p>
           </div>
           <div class="baseline-pill">Baseline Risk <span id="baselineRiskValue">55</span></div>
         </div>
 
-        <div class="profile-grid">
+        <div class="grid-3">
           <div class="profile-card">
             <div class="profile-label rose">♥ Health Profile</div>
             <div class="profile-value" id="healthValue">58</div>
@@ -503,15 +573,19 @@
         </div>
       </div>
 
-      <div class="two-col">
+      <div class="grid-2">
         <div>
-          <h3 class="subhead">2. Assess Each Input and Assign Confidence</h3>
+          <h3 class="subhead">2. System-Generated Source Scores</h3>
           <div id="sources"></div>
-          <button id="conflictBtn" class="primary-btn">Load Conflicting Case</button>
+
+          <div class="button-row">
+            <button id="conflictBtn" class="primary-btn">Load Conflicting Case</button>
+            <button id="resetBtn" class="secondary-btn">Reset Case</button>
+          </div>
         </div>
 
         <div class="results-col">
-          <h3 class="subhead">3. Fuse the Data and Output the Decision</h3>
+          <h3 class="subhead">3. Fused Risk + Confidence</h3>
 
           <div class="result-card sky">
             <div class="result-label">Baseline Risk Profile</div>
@@ -519,7 +593,7 @@
           </div>
 
           <div class="result-card blue">
-            <div class="result-label">Fused Risk Score</div>
+            <div class="result-label">System Fused Risk Score</div>
             <div class="result-number" id="fusedRiskValue">61</div>
             <div class="bar">
               <div id="fusedRiskBar" class="bar-fill blue-fill" style="width: 61%;"></div>
@@ -527,28 +601,68 @@
           </div>
 
           <div class="result-card green">
-            <div class="result-label">Confidence</div>
+            <div class="result-label">System Confidence Score</div>
             <div class="result-number" id="confidenceValue">78%</div>
             <div class="bar">
               <div id="confidenceBar" class="bar-fill green-fill" style="width: 78%;"></div>
             </div>
           </div>
 
-          <div class="decision-card">
-            <div class="decision-label">✓ Decision</div>
-            <div class="decision-value" id="decisionValue">Table Rated</div>
-          </div>
-
-          <div class="explainability">
-            <div class="explain-title">Explainability</div>
-            <div id="explainList"></div>
+          <div class="result-card purple">
+            <div class="result-label">Source Agreement / Conflict</div>
+            <div style="margin-top:10px;">
+              <span id="agreementTag" class="tag tag-amber">Moderate Conflict</span>
+            </div>
           </div>
         </div>
+      </div>
+
+      <div class="grid-2" style="margin-top: 18px;">
+        <div class="card" style="margin-bottom:0; padding:18px;">
+          <h3 class="subhead">4. Top Drivers</h3>
+          <div id="driverList" class="driver-list"></div>
+        </div>
+
+        <div class="decision-card" style="margin-bottom:0;">
+          <div class="decision-label">5. Recommendation</div>
+          <div class="decision-value" id="decisionValue">Table Rated</div>
+          <div class="decision-note" id="decisionNote">
+            Recommendation is based on confidence-weighted fusion of questionnaire, Rx, labs, and APS signals.
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-2" style="margin-top: 18px;">
+        <div class="adjustment-box">
+          <h3 class="subhead">6. Underwriter Adjustment</h3>
+          <p class="section-subtitle" style="margin-top:0;">Human-in-the-loop control allows the underwriter to adjust the final recommendation when additional context or judgment is required.</p>
+
+          <div class="input-label">Underwriter Adjustment (risk points): <span id="adjustmentValue">0</span></div>
+          <input id="adjustment" type="range" min="-20" max="20" value="0" />
+
+          <div class="result-card amber" style="margin-top:14px; background: var(--amber-soft);">
+            <div class="result-label" style="color: var(--amber);">Final Adjusted Risk Score</div>
+            <div class="result-number" id="adjustedRiskValue" style="color: var(--amber);">61</div>
+            <div class="bar">
+              <div id="adjustedRiskBar" class="bar-fill amber-fill" style="width: 61%;"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-bottom:0; padding:18px;">
+          <h3 class="subhead">7. Audit Trail</h3>
+          <div id="auditList" class="audit-list"></div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:18px; margin-bottom:0; padding:18px;">
+        <h3 class="subhead">Explainability</h3>
+        <div id="explainList" class="explain-list"></div>
       </div>
     </section>
 
     <section class="card impact">
-      <h2>Business Impact</h2>
+      <h2 class="section-title" style="margin-bottom:16px;">8. Business Impact</h2>
       <div class="impact-grid">
         <div class="impact-item green-text">
           <span class="impact-icon green-bg">↗</span>
@@ -574,19 +688,89 @@
   </main>
 
   <script>
-    const state = {
+    const defaultState = () => ({
       riskProfile: { health: 58, lifestyle: 52, timing: 70 },
+      adjustment: 0,
       sources: {
-        aps: { label: "APS Records", icon: "A", boxClass: "blue-box", risk: 65, confidence: 55 },
-        rx: { label: "Rx Data", icon: "R", boxClass: "purple-box", risk: 72, confidence: 75 },
-        labs: { label: "Lab Results", icon: "L", boxClass: "green-box", risk: 48, confidence: 90 },
-        wearables: { label: "Wearables", icon: "W", boxClass: "orange-box", risk: 58, confidence: 65 }
+        questionnaire: {
+          label: "Medical Questionnaire",
+          icon: "Q",
+          boxClass: "blue-box",
+          risk: 28,
+          confidence: 38,
+          note: "Self-reported answers"
+        },
+        rx: {
+          label: "Rx Data",
+          icon: "R",
+          boxClass: "purple-box",
+          risk: 72,
+          confidence: 78,
+          note: "Medication-derived signal"
+        },
+        labs: {
+          label: "Lab Results",
+          icon: "L",
+          boxClass: "green-box",
+          risk: 68,
+          confidence: 90,
+          note: "Structured clinical values"
+        },
+        aps: {
+          label: "APS / Medical Records",
+          icon: "A",
+          boxClass: "orange-box",
+          risk: 61,
+          confidence: 64,
+          note: "Physician notes and records"
+        }
       }
-    };
+    });
+
+    let state = defaultState();
 
     function baselineRisk() {
       const p = state.riskProfile;
-      return Math.round(p.health * 0.45 + p.lifestyle * 0.3 + (100 - p.timing) * 0.25);
+      return Math.round(
+        p.health * 0.45 +
+        p.lifestyle * 0.30 +
+        (100 - p.timing) * 0.25
+      );
+    }
+
+    function sourceAgreementTag(risks) {
+      const min = Math.min(...risks);
+      const max = Math.max(...risks);
+      const spread = max - min;
+
+      if (spread <= 15) {
+        return { text: "High Agreement", className: "tag tag-green" };
+      } else if (spread <= 35) {
+        return { text: "Moderate Conflict", className: "tag tag-amber" };
+      } else {
+        return { text: "High Conflict", className: "tag tag-red" };
+      }
+    }
+
+    function recommendation(score, confidence) {
+      if (confidence < 50) return "Manual Review";
+      if (score > 80) return "Decline / Postpone";
+      if (score > 68) return "Table Rated";
+      if (score > 52) return "Standard Plus";
+      if (score > 38) return "Standard";
+      return "Preferred";
+    }
+
+    function recommendationNote(rec, confidenceTag) {
+      const notes = {
+        "Preferred": "Low fused risk with strong corroboration across available evidence.",
+        "Standard": "Balanced risk profile with no dominant severe driver requiring rating.",
+        "Standard Plus": "Moderate concerns present, but not enough to warrant a table rating.",
+        "Table Rated": "Material adverse indicators supported by higher-confidence evidence.",
+        "Decline / Postpone": "Severe risk indicators and/or substantial corroborated evidence require postponement or decline review.",
+        "Manual Review": "Low overall confidence or significant data conflict suggests referral to an underwriter."
+      };
+      return `${notes[rec]} Source agreement status: ${confidenceTag}.`;
     }
 
     function calculate() {
@@ -596,31 +780,58 @@
         const variance = Math.max(1, 101 - s.confidence);
         const weight = 1 / variance;
         const blendedRisk = Math.round(s.risk * 0.75 + base * 0.25);
-        return { key, label: s.label, weight, risk: blendedRisk, confidence: s.confidence };
+        return {
+          key,
+          label: s.label,
+          note: s.note,
+          sourceRisk: s.risk,
+          confidence: s.confidence,
+          weight,
+          blendedRisk
+        };
       });
 
       const totalWeight = evidence.reduce((sum, e) => sum + e.weight, 0) || 1;
-
       const fusedRisk = Math.round(
-        evidence.reduce((sum, e) => sum + e.risk * e.weight, 0) / totalWeight
+        evidence.reduce((sum, e) => sum + e.blendedRisk * e.weight, 0) / totalWeight
       );
-
-      const confidence = Math.max(1, Math.min(99, Math.round(
+      const fusedConfidence = Math.max(1, Math.min(99, Math.round(
         evidence.reduce((sum, e) => sum + e.confidence * e.weight, 0) / totalWeight
       )));
 
-      let decision = "Standard";
-      if (fusedRisk > 75) decision = "Decline";
-      else if (fusedRisk > 60) decision = "Table Rated";
-      else if (fusedRisk > 45) decision = "Standard Plus";
-      else decision = "Preferred";
+      const adjustedRisk = Math.max(0, Math.min(100, fusedRisk + state.adjustment));
+      const agreement = sourceAgreementTag(evidence.map(e => e.sourceRisk));
+      const rec = recommendation(adjustedRisk, fusedConfidence);
+      const recNote = recommendationNote(rec, agreement.text);
+
+      const ranked = [...evidence].sort((a, b) => b.weight - a.weight);
+
+      const drivers = ranked.slice(0, 3).map((e) => ({
+        label: e.label,
+        detail: `${e.note} · Risk ${e.sourceRisk} · Confidence ${e.confidence}%`
+      }));
+
+      const audit = [
+        "Questionnaire imported and normalized",
+        "Rx signal generated from medication profile",
+        "Lab values mapped to risk bands",
+        "APS / records signal extracted",
+        "Confidence-weighted fusion completed",
+        `Underwriter adjustment applied: ${state.adjustment >= 0 ? "+" : ""}${state.adjustment}`,
+        `Final recommendation generated: ${rec}`
+      ];
 
       return {
         base,
         fusedRisk,
-        confidence,
-        decision,
-        evidence: evidence.sort((a, b) => b.weight - a.weight)
+        fusedConfidence,
+        adjustedRisk,
+        recommendation: rec,
+        recommendationNote: recNote,
+        agreement,
+        ranked,
+        drivers,
+        audit
       };
     }
 
@@ -634,11 +845,14 @@
         wrapper.innerHTML = `
           <div class="source-top">
             <div class="icon-box ${source.boxClass}">${source.icon}</div>
-            <div class="source-title">${source.label}</div>
+            <div>
+              <div class="source-title">${source.label}</div>
+              <div class="source-meta">${source.note}</div>
+            </div>
           </div>
-          <div class="input-label">Source Risk Assessment: <span id="${key}-risk-value">${source.risk}</span></div>
+          <div class="input-label">System-Generated Risk Score: <span id="${key}-risk-value">${source.risk}</span></div>
           <input type="range" min="0" max="100" value="${source.risk}" id="${key}-risk" />
-          <div class="input-label">Confidence: <span id="${key}-confidence-value">${source.confidence}</span></div>
+          <div class="input-label">System Confidence Score: <span id="${key}-confidence-value">${source.confidence}</span>%</div>
           <input type="range" min="0" max="99" value="${source.confidence}" id="${key}-confidence" />
         `;
         container.appendChild(wrapper);
@@ -646,39 +860,74 @@
         document.getElementById(`${key}-risk`).addEventListener("input", (e) => {
           state.sources[key].risk = Number(e.target.value);
           document.getElementById(`${key}-risk-value`).textContent = e.target.value;
-          renderResults();
+          renderAll();
         });
 
         document.getElementById(`${key}-confidence`).addEventListener("input", (e) => {
           state.sources[key].confidence = Number(e.target.value);
           document.getElementById(`${key}-confidence-value`).textContent = e.target.value;
-          renderResults();
+          renderAll();
         });
       });
     }
 
-    function renderResults() {
-      const results = calculate();
+    function renderAll() {
+      const r = calculate();
 
-      document.getElementById("baselineRiskValue").textContent = results.base;
-      document.getElementById("baselineRiskPanel").textContent = results.base;
-      document.getElementById("fusedRiskValue").textContent = results.fusedRisk;
-      document.getElementById("confidenceValue").textContent = results.confidence + "%";
-      document.getElementById("decisionValue").textContent = results.decision;
-      document.getElementById("fusedRiskBar").style.width = results.fusedRisk + "%";
-      document.getElementById("confidenceBar").style.width = results.confidence + "%";
+      document.getElementById("baselineRiskValue").textContent = r.base;
+      document.getElementById("baselineRiskPanel").textContent = r.base;
+
+      document.getElementById("fusedRiskValue").textContent = r.fusedRisk;
+      document.getElementById("fusedRiskBar").style.width = r.fusedRisk + "%";
+
+      document.getElementById("confidenceValue").textContent = r.fusedConfidence + "%";
+      document.getElementById("confidenceBar").style.width = r.fusedConfidence + "%";
+
+      document.getElementById("adjustmentValue").textContent = state.adjustment >= 0 ? `+${state.adjustment}` : state.adjustment;
+      document.getElementById("adjustedRiskValue").textContent = r.adjustedRisk;
+      document.getElementById("adjustedRiskBar").style.width = r.adjustedRisk + "%";
+
+      const agreementTag = document.getElementById("agreementTag");
+      agreementTag.textContent = r.agreement.text;
+      agreementTag.className = r.agreement.className;
+
+      document.getElementById("decisionValue").textContent = r.recommendation;
+      document.getElementById("decisionNote").textContent = r.recommendationNote;
 
       const explainList = document.getElementById("explainList");
       explainList.innerHTML = "";
-
-      results.evidence.forEach((e) => {
+      r.ranked.forEach((e) => {
         const row = document.createElement("div");
-        row.className = "explain-row";
+        row.className = "list-row";
         row.innerHTML = `
           <span>${e.label}</span>
-          <span class="explain-right">Weight ${e.weight.toFixed(2)} · Blended Risk ${e.risk}</span>
+          <span class="list-right">Weight ${e.weight.toFixed(2)} · Blended Risk ${e.blendedRisk} · Confidence ${e.confidence}%</span>
         `;
         explainList.appendChild(row);
+      });
+
+      const driverList = document.getElementById("driverList");
+      driverList.innerHTML = "";
+      r.drivers.forEach((d, i) => {
+        const row = document.createElement("div");
+        row.className = "list-row";
+        row.innerHTML = `
+          <span>Driver ${i + 1}: ${d.label}</span>
+          <span class="list-right">${d.detail}</span>
+        `;
+        driverList.appendChild(row);
+      });
+
+      const auditList = document.getElementById("auditList");
+      auditList.innerHTML = "";
+      r.audit.forEach((item, i) => {
+        const row = document.createElement("div");
+        row.className = "list-row";
+        row.innerHTML = `
+          <span>Step ${i + 1}</span>
+          <span class="list-right">${item}</span>
+        `;
+        auditList.appendChild(row);
       });
     }
 
@@ -686,17 +935,22 @@
       ["health", "lifestyle", "timing"].forEach((field) => {
         const el = document.getElementById(field);
         const valueEl = document.getElementById(field + "Value");
-
         el.addEventListener("input", (e) => {
           state.riskProfile[field] = Number(e.target.value);
           valueEl.textContent = e.target.value;
-          renderResults();
+          renderAll();
         });
+      });
+
+      document.getElementById("adjustment").addEventListener("input", (e) => {
+        state.adjustment = Number(e.target.value);
+        renderAll();
       });
     }
 
     document.getElementById("conflictBtn").addEventListener("click", () => {
       state.riskProfile = { health: 72, lifestyle: 60, timing: 35 };
+      state.adjustment = 0;
 
       document.getElementById("health").value = 72;
       document.getElementById("lifestyle").value = 60;
@@ -706,18 +960,44 @@
       document.getElementById("lifestyleValue").textContent = "60";
       document.getElementById("timingValue").textContent = "35";
 
-      state.sources.aps.risk = 80; state.sources.aps.confidence = 50;
-      state.sources.rx.risk = 75; state.sources.rx.confidence = 80;
-      state.sources.labs.risk = 45; state.sources.labs.confidence = 92;
-      state.sources.wearables.risk = 60; state.sources.wearables.confidence = 60;
+      document.getElementById("adjustment").value = 0;
+
+      state.sources.questionnaire.risk = 18;
+      state.sources.questionnaire.confidence = 24;
+
+      state.sources.rx.risk = 78;
+      state.sources.rx.confidence = 82;
+
+      state.sources.labs.risk = 84;
+      state.sources.labs.confidence = 92;
+
+      state.sources.aps.risk = 69;
+      state.sources.aps.confidence = 70;
 
       renderSources();
-      renderResults();
+      renderAll();
+    });
+
+    document.getElementById("resetBtn").addEventListener("click", () => {
+      state = defaultState();
+
+      document.getElementById("health").value = state.riskProfile.health;
+      document.getElementById("lifestyle").value = state.riskProfile.lifestyle;
+      document.getElementById("timing").value = state.riskProfile.timing;
+
+      document.getElementById("healthValue").textContent = state.riskProfile.health;
+      document.getElementById("lifestyleValue").textContent = state.riskProfile.lifestyle;
+      document.getElementById("timingValue").textContent = state.riskProfile.timing;
+
+      document.getElementById("adjustment").value = 0;
+
+      renderSources();
+      renderAll();
     });
 
     renderSources();
     bindProfileControls();
-    renderResults();
+    renderAll();
   </script>
 </body>
 </html>
